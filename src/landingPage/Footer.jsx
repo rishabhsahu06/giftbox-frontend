@@ -20,9 +20,9 @@ const SOCIAL_LINKS = [
 ];
 
 const CONTACT_INFO = {
-  address: "B-85 Block B Sector 64 Noida, Uttar Pradesh",
-  email: "Dummy@gmail.com",
-  phone: "0120 3202853",
+  address: "10 Godha colony pagnispaga palsikar Indore 452001",
+  email: "hetalsoapstory@gmail.com",
+  phone: "9112233507",
 };
 
 const NavigationSection = ({ title, links }) => (

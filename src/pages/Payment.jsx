@@ -61,7 +61,7 @@ const Payment = () => {
       }
 
       const options = {
-        key: "rzp_test_RT2QxXAweehcUn", 
+        key: import.meta.env.VITE_RAZORPAY_KEY, 
         amount: order.amount.toString(),
         currency: order.currency,
         name: "My Shop",
@@ -97,7 +97,7 @@ const Payment = () => {
       rzp1.open();
 
 
-      new window.Razorpay(options).open();
+      // new window.Razorpay(options).open();
     } catch (err) {
       toast.error("Payment initiation failed");
     } finally {

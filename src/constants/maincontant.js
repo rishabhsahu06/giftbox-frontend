@@ -3,13 +3,13 @@ import logo from "../assets/logo1.png";
 
 
 export const MainContent = {
-  appName: "Darvar Collection",
+  appName: import.meta.env.VITE_APP_NAME,
   logo: logo,
   // appLogoClr: appLogoClr,
   appURL: "",
-  contactNo: "+096855 53090",
-  email: "Hetalcollection@example.com",
-  address: "Shop NO.- 5 and 6, Plot no.130, Birla Mandir Rd, Near Malviya Complex, Roshanpura, Malviya Nagar, Bhopal, Madhya Pradesh 462003",
+  contactNo: "9112233507",
+  email: "hetalsoapstory@gmail.com",
+  address: "10 Godha colony pagnispaga palsikar Indore 452001",
   telegram_link: "https://t.me/YourTelegramUsername",
 };
 export const backendConfig = {

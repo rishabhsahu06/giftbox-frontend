@@ -35,14 +35,14 @@ const Supportpage = () => {
     {
       icon: <Mail className="w-8 h-8" />,
       title: "Email Support",
-      description: "support@company.com",
+      description: "hetalsoapstory@gmail.com",
       action: "Send Email",
       color: "from-purple-600 to-pink-600"
     },
     {
       icon: <Phone className="w-8 h-8" />,
       title: "Phone Support",
-      description: "+1 (555) 123-4567",
+      description: "9112233507",
       action: "Call Now",
       color: "from-green-600 to-emerald-600"
     }

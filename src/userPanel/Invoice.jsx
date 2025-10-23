@@ -18,7 +18,7 @@ const Invoice = () => {
     const fetchInvoice = async () => {
       setLoading(true);
       try {
-        const res = await getOrderById(orderId);
+        const res = await getOrderById();
         if (res.success) {
           setInvoiceData(res.order);
         } else {
@@ -31,7 +31,7 @@ const Invoice = () => {
       }
     };
     fetchInvoice();
-  }, [orderId]);
+  }, []);
 
   if (loading) return <PageLoader loading={loading} />;
   if (!invoiceData) return <div className="text-center py-10">Loading...</div>;
@@ -113,9 +113,9 @@ const Invoice = () => {
           />
           <div className="text-right text-[10px] sm:text-sm">
             <h4 className="font-bold text-base sm:text-lg">Hetal Collection</h4>
-            <p>88/2/2/4 Singhal Compound Dewas Naka</p>
+            <p>10 Godha colony pagnispaga palsikar Indore 452001</p>
             <p>Lasudiya Mori, Indore, India - 452010</p>
-            <p>(+91) 896 496 9960 | info@pvt.com</p>
+            <p>(+91) 9112233507 | hetalsoapstory@gmail.com</p>
           </div>
         </div>
 

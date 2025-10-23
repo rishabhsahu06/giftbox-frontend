@@ -64,14 +64,14 @@ const NavbarMain = () => {
               For bulk orders, special pricing, or detailed inquiries, contact us directly:
             </p>
             <div className="flex flex-col gap-3">
-              <p className="font-medium text-gray-900">📞 Call: +91 98765 43210</p>
-              <p className="font-medium text-gray-900">✉️ Email: sales@example.com</p>
+              <p className="font-medium text-gray-900">📞 Call: 9112233507</p>
+              <p className="font-medium text-gray-900">✉️ Email: hetalsoapstory@gmail.com</p>
               <p className="font-medium text-gray-900">
                 🕒 Availability: Mon-Sat 10AM - 6PM
               </p>
             </div>
             <button
-              onClick={() => (window.location.href = "tel:+919876543210")}
+              onClick={() => (window.location.href = "tel:9112233507")}
               className="mt-6 w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-xl font-semibold transition"
             >
               Call Now
@@ -96,7 +96,7 @@ const NavbarMain = () => {
             <div className="hidden lg:flex items-center flex-1 max-w-2xl mx-8 gap-6">
               <div className="flex items-center gap-2 text-gray-700">
                 <Phone className="w-4 h-4" />
-                <span className="text-sm font-medium">+123 567 880</span>
+                <span className="text-sm font-medium">9112233507</span>
               </div>
 
               <div className="flex items-center flex-1 bg-gray-100 rounded-md overflow-hidden border border-gray-200 focus-within:border-gray-400">
