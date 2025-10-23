@@ -8,7 +8,7 @@ import { userRegister, verifyOTP } from "../api/user";
 import { toast } from "sonner";
 import PageLoader from "../Pageloader/Pageloader";
 import OTPPopup from "./OTPPopup";
-import { userCryptoRegister } from "d:/glc-client-final/src/api/user";
+// import { userRegister } from "../api/user";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -39,40 +39,40 @@ const RegisterPage = () => {
     window.location.href = oauthUrl;
 
   };
-  const handleVerifyOTP = async (enteredOtp) => {
-    try {
-      const response = await verifyOTP(userIdentifier, enteredOtp);
+  // const handleVerifyOTP = async (enteredOtp) => {
+  //   try {
+  //     const response = await verifyOTP(userIdentifier, enteredOtp);
 
-      if (response?.success) {
-        if (storedPayload) {
-          try {
-            const cryptoRes = await userCryptoRegister(storedPayload);
-            console.log("Crypto Register Response:", cryptoRes);
-          } catch (cryptoErr) {
-            console.error("Crypto Register Error:", cryptoErr);
-          }
-        }
+  //     if (response?.success) {
+  //       if (storedPayload) {
+  //         try {
+  //           const cryptoRes = await userCryptoRegister(storedPayload);
+  //           console.log("Crypto Register Response:", cryptoRes);
+  //         } catch (cryptoErr) {
+  //           console.error("Crypto Register Error:", cryptoErr);
+  //         }
+  //       }
 
-        Swal.fire({
-          icon: "success",
-          title: "OTP Verified",
-          text: response?.message || "Your account has been created!",
-          confirmButtonColor: "#22c55e",
-        }).then(() => {
-          setOtpOpen(false);
-          navigate("/login");
-        });
-      }
-    } catch (err) {
-      console.error("OTP Verification Error:", err.response || err.message);
-      Swal.fire({
-        icon: "error",
-        title: "OTP Verification Failed",
-        text: err.response?.data?.message || "Please try again.",
-        confirmButtonColor: "#ef4444",
-      });
-    }
-  };
+  //       Swal.fire({
+  //         icon: "success",
+  //         title: "OTP Verified",
+  //         text: response?.message || "Your account has been created!",
+  //         confirmButtonColor: "#22c55e",
+  //       }).then(() => {
+  //         setOtpOpen(false);
+  //         navigate("/login");
+  //       });
+  //     }
+  //   } catch (err) {
+  //     console.error("OTP Verification Error:", err.response || err.message);
+  //     Swal.fire({
+  //       icon: "error",
+  //       title: "OTP Verification Failed",
+  //       text: err.response?.data?.message || "Please try again.",
+  //       confirmButtonColor: "#ef4444",
+  //     });
+  //   }
+  // };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -243,7 +243,7 @@ const RegisterPage = () => {
         </div>
       </div>
 
-      <OTPPopup isOpen={otpOpen} onClose={() => setOtpOpen(false)} onVerify={handleVerifyOTP} otpSentTo={otpSentTo} />
+      {/* <OTPPopup isOpen={otpOpen} onClose={() => setOtpOpen(false)} onVerify={handleVerifyOTP} otpSentTo={otpSentTo} /> */}
     </>
   );
 };
