@@ -81,7 +81,7 @@ const NavbarBottom = ({ mobileOpen, setMobileOpen, isActiveNavItem, setShowEnqui
     };
 
     return (
-        <nav className="bg-white border-b border-gray-200 sticky top-[64px] sm:top-[80px] z-40">
+        <nav className="bg-white border-b border-gray-200  top-[64px] sm:top-[80px] z-40">
             {/* ---------- DESKTOP NAV ---------- */}
             <div className="max-w-7xl mx-auto px-2 hidden lg:flex items-center justify-between py-3">
                 {/* CATEGORY SECTION */}

@@ -202,7 +202,7 @@ const BlogPost = () => {
 
         {/* View All Button */}
         <div className="text-center">
-          <button className="bg-rose-500 hover:bg-rose-600 text-white px-8 py-3 text-base sm:text-lg font-medium rounded-full shadow-md hover:shadow-lg transition-all duration-300">
+          <button className="bg-red-400 hover:bg-rose-600 text-white px-8 py-3 text-base sm:text-lg md:text-xl font-medium rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
             VIEW ALL
           </button>
         </div>

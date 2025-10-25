@@ -7,7 +7,7 @@ import image from "../assets/loginsingup/signup.png";
 import { userRegister, verifyOTP } from "../api/user";
 import { toast } from "sonner";
 import PageLoader from "../Pageloader/Pageloader";
-import OTPPopup from "./OTPPopup";
+// import OTPPopup from "./OTPPopup";
 // import { userRegister } from "../api/user";
 
 const RegisterPage = () => {

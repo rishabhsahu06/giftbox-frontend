@@ -246,10 +246,10 @@ export default function OccasionGift({ onViewAll, onOccasionClick }) {
         <div className="text-center">
           <button
             onClick={handleViewAll}
-            className="bg-red-500 hover:bg-red-600 active:bg-red-700 text-white px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base font-medium rounded-full transition-all duration-200 shadow-lg hover:shadow-xl active:scale-95"
+            className="bg-red-400 hover:bg-red-600 active:bg-red-700 text-white px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base md:text-xl font-medium rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl active:scale-95"
           >
-            VIEW ALL OCCASIONS
-          </button>
+            VIEW ALL 
+          </button> 
         </div>
       </div>
     </div>

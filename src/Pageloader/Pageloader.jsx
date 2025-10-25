@@ -5,7 +5,7 @@ import loadingAnimation from "../assets/lottie.json"
 const PageLoader = ({ loading }) => {
     return (
       <div
-        className={`fixed inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm z-50 transition-opacity duration-500 ${
+        className={`fixed inset-0 flex items-center justify-center bg-black/20  z-50 transition-opacity duration-500 ${
           loading ? "opacity-100 visible" : "opacity-0 invisible"
         }`}
       >
@@ -13,7 +13,7 @@ const PageLoader = ({ loading }) => {
           animationData={loadingAnimation}
           loop
           autoplay
-          style={{ width: 250, height: 250 }}
+          style={{ width: 100, height: 150 }}
         />
       </div>
     );

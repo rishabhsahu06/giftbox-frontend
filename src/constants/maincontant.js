@@ -10,12 +10,12 @@ export const MainContent = {
   contactNo: "9112233507",
   email: "hetalsoapstory@gmail.com",
   address: "10 Godha colony pagnispaga palsikar Indore 452001",
-  telegram_link: "https://t.me/YourTelegramUsername",
+  // telegram_link: "https://t.me/YourTelegramUsername",
 };
 export const backendConfig = {
 
-  base: "https://2w1qtkhf-3000.inc1.devtunnels.ms/",
-  origin: "https://2w1qtkhf-3000.inc1.devtunnels.ms/api",
+  base: "https://giftbox-backend-jymq.vercel.app/",
+  origin: "https://giftbox-backend-jymq.vercel.app/api",
 
 };
 
@@ -33,5 +33,6 @@ Axios.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
+
 
 
