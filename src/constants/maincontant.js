@@ -14,8 +14,8 @@ export const MainContent = {
 };
 export const backendConfig = {
 
-  base: "https://giftbox-backend-jymq.vercel.app/",
-  origin: "https://giftbox-backend-jymq.vercel.app/api",
+  base: "https://giftbox-backend-4j4z.vercel.app/",
+  origin: "https://giftbox-backend-4j4z.vercel.app/api",
 
 };
 
