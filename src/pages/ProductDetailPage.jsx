@@ -147,16 +147,16 @@ export default function ProductDetailPage() {
           <div className="flex flex-col justify-between">
             <div>
               {/* Title + Price */}
-              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
+              <h1 className="text-xl md:text-3xl font-bold text-gray-900 mb-2">
                 {product.name}
               </h1>
 
               <div className="flex items-center gap-3 mb-2">
-                <span className="text-3xl font-bold text-gray-900">
+                <span className="text-xl md:text-2xl font-bold text-gray-900">
                   ₹ {product.discounted_price || product.price}
                 </span>
                 {product.mrp_price && (
-                  <span className="text-xl text-gray-400 line-through">
+                  <span className="text-xl md:text-2xl text-gray-400 line-through">
                     ₹ {product.mrp_price}
                   </span>
                 )}
@@ -231,20 +231,20 @@ export default function ProductDetailPage() {
                     {quantity}
                   </span>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-1">
                   <button
                     onClick={() => handleQuantityChange("decrement")}
                     disabled={quantity <= 1}
-                    className="w-10 h-10 rounded-full border-2 border-gray-900 flex items-center justify-center hover:bg-gray-100 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-6 h-6 rounded-full border-2 border-gray-900 flex items-center justify-center hover:bg-gray-100 transition disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <Minus className="w-5 h-5 text-gray-900" />
                   </button>
-                  <span className="text-2xl font-bold text-gray-900 min-w-[3rem] text-center">
+                  <span className="text-xl font-bold text-gray-900 min-w-[2rem] text-center">
                     {quantity}
                   </span>
                   <button
                     onClick={() => handleQuantityChange("increment")}
-                    className="w-10 h-10 rounded-full border-2 border-gray-900 flex items-center justify-center hover:bg-gray-100 transition"
+                    className="w-6 h-6 rounded-full border-2 border-gray-900 flex items-center justify-center hover:bg-gray-100 transition"
                   >
                     <Plus className="w-5 h-5 text-gray-900" />
                   </button>
@@ -256,7 +256,7 @@ export default function ProductDetailPage() {
                 <span className="text-lg font-semibold text-gray-900">
                   Sub Total
                 </span>
-                <span className="text-2xl font-bold text-gray-900">
+                <span className="text-xl md:text-2xl font-bold text-gray-900">
                   ₹{" "}
                   {(
                     (product.discounted_price || product.price) * quantity

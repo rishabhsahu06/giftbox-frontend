@@ -195,12 +195,12 @@ export default function BestSellingCategories({ onViewAll }) {
                       onClick={() => handleAddCart(product)}
                       disabled={adding === product._id || product.stock === 0}
                     >
-                      <ShoppingCart className="w-3 h-3 sm:w-4 sm:h-4" />
+                      {/* <ShoppingCart className="w-3 h-3 sm:w-4 sm:h-4" /> */}
                       <span className="hidden xs:inline">
                         {adding === product._id ? "ADDING..." : "ADD CART"}
                       </span>
                       <span className="xs:hidden">
-                        {adding === product._id ? "..." : "CART"}
+                        {adding === product._id ? "..." : "Add to Cart"}
                       </span>
                     </button>
                     <button

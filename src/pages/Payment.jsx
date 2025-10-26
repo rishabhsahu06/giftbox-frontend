@@ -149,6 +149,7 @@ const Payment = () => {
                 />
                 <span className="text-gray-800 font-medium">Cash on Delivery (COD)</span>
               </div>
+              
               <span className="text-gray-500 text-sm">Pay with cash</span>
             </label>
 
@@ -168,7 +169,7 @@ const Payment = () => {
                   onChange={(e) => setPaymentMethod(e.target.value)}
                   className="w-5 h-5 accent-black"
                 />
-                <span className="text-gray-800 font-medium">Pay Online (Razorpay)</span>
+                <span className="text-gray-800 font-medium">Pay Online</span>
               </div>
               <span className="text-gray-500 text-sm">Cards, UPI, Net Banking</span>
             </label>
