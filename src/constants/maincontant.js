@@ -16,6 +16,9 @@ export const backendConfig = {
 
   base: "https://giftbox-backend-12cs.vercel.app/",
   origin: "https://giftbox-backend-12cs.vercel.app/api",
+  
+  // base:"https://2w1qtkhf-3000.inc1.devtunnels.ms/",
+  // origin:"https://2w1qtkhf-3000.inc1.devtunnels.ms/api",
 
 };
 
@@ -33,6 +36,7 @@ Axios.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
+
 
 
 

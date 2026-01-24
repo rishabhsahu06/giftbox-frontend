@@ -112,8 +112,8 @@ const FooterBottom = () => (
 
 function Footer() {
   return (
-    <footer className="bg-black text-white py-12 px-4 md:px-8 mt-12">
-      <div className="max-w-7xl mx-auto">
+    <footer className="bg-black text-white py-12 px-4 md:px-8 ">
+      <div className="md:p-8 mx-auto">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
           <ContactInfoSection />

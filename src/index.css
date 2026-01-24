@@ -46,3 +46,56 @@
 .hide-scrollbar::-webkit-scrollbar {
   display: none;             /* Chrome, Safari */
 }
+
+
+
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.animate-scaleIn {
+  animation: scaleIn 0.3s ease-out;
+}
+
+
+
+@media print {
+  body {
+    margin: 0;
+    background: white;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  #invoice-print,
+  #invoice-print * {
+    visibility: visible;
+  }
+
+  #invoice-print {
+    position: absolute;
+    inset: 0;
+    width: 210mm;
+    min-height: 297mm;
+    padding: 12mm;
+  }
+
+  .print\:hidden {
+    display: none !important;
+  }
+
+  .shadow,
+  .shadow-md,
+  .shadow-lg {
+    box-shadow: none !important;
+  }
+}

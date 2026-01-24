@@ -129,11 +129,11 @@ function GiftShop() {
         </div>
 
         {/* Features */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 md:gap-12 lg:gap-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  md:gap-10 lg:gap-12">
           {features.map((item, index) => (
             <div
               key={index}
-              className="group bg-white rounded-xl p-8 flex flex-col items-center text-center transition-all duration-300 hover:-translate-y-2"
+              className="group bg-white rounded-xl  p-2 md:p-8 flex flex-col items-center text-center transition-all duration-300 hover:-translate-y-2"
             >
               <div className="mb-6 flex justify-center">{item.icon}</div>
               <h2 className="text-lg md:text-xl font-medium text-gray-600 group-hover:text-gray-800 transition-colors duration-300">

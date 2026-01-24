@@ -97,7 +97,7 @@ export default function BestSellingCategories({ onViewAll }) {
 
   return (
     <section className="w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-      <div className="max-w-7xl mx-auto">
+      <div className=" md:p-10 mx-auto">
         {/* Header */}
         <div className="mb-6 sm:mb-8 text-center sm:text-left">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
@@ -125,18 +125,18 @@ export default function BestSellingCategories({ onViewAll }) {
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-10">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-2 sm:gap-6 mb-8 sm:mb-10">
           {products.length > 0 ? (
             products.map((product) => (
               <div
-                key={product._id}
+                key={product?._id}
                 className="bg-white rounded-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 flex flex-col"
               >
                 {/* Product Image */}
                 <div className="relative aspect-square overflow-hidden bg-gray-100">
                   <img
-                    src={product.images?.[0] || 'https://via.placeholder.com/400'}
-                    alt={product.name}
+                    src={product?.images?.[0] || 'https://via.placeholder.com/400'}
+                    alt={product?.name}
                     className="w-full h-full object-cover hover:scale-110 transition-transform duration-500 cursor-pointer"
                     onClick={() => handleBuyNow(product)}
                     loading="lazy"
@@ -159,7 +159,7 @@ export default function BestSellingCategories({ onViewAll }) {
                 <div className="p-3 sm:p-4 flex flex-col flex-grow">
                   {/* Product Name */}
                   <h3 className="font-semibold text-gray-900 mb-2 sm:mb-3 text-sm sm:text-base line-clamp-2 min-h-[2.5rem] sm:min-h-[3rem]">
-                    {product.name}
+                    {product?.name}
                   </h3>
 
                   {/* Price Section */}
@@ -167,14 +167,14 @@ export default function BestSellingCategories({ onViewAll }) {
                     <div className="flex items-center">
                       <IndianRupee className="w-4 h-4 sm:w-5 sm:h-5 text-gray-900" />
                       <span className="text-lg sm:text-xl font-bold text-gray-900">
-                        {product.discounted_price}
+                        {product?.discounted_price}
                       </span>
                     </div>
-                    {product.mrp_price > product.discounted_price && (
+                    {product?.mrp_price > product?.discounted_price && (
                       <div className="flex items-center">
                         <IndianRupee className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400 line-through" />
                         <span className="text-sm sm:text-base text-gray-400 line-through">
-                          {product.mrp_price}
+                          {product?.mrp_price}
                         </span>
                       </div>
                     )}
@@ -182,18 +182,18 @@ export default function BestSellingCategories({ onViewAll }) {
 
                   {/* Stock Info */}
                   <div className="mb-3">
-                    <span className={`text-xs font-medium ${product.stock > 0 ? 'text-green-600' : 'text-red-600'
+                    <span className={`text-xs font-medium ${product?.stock > 0 ? 'text-green-600' : 'text-red-600'
                       }`}>
-                      {product.stock > 0 ? `In Stock (${product.stock})` : 'Out of Stock'}
+                      {product?.stock > 0 ? `In Stock (${product?.stock})` : 'Out of Stock'}
                     </span>
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="flex gap-2 mt-auto">
+                  <div className=" flex-col md:flex-row flex gap-2 mt-auto">
                     <button
                       className="flex-1 flex items-center justify-center gap-1 sm:gap-2 bg-white hover:bg-gray-50 text-gray-700 border border-gray-300 hover:border-red-500 px-3 sm:px-4 py-2 sm:py-2.5 rounded-md text-xs sm:text-sm font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                       onClick={() => handleAddCart(product)}
-                      disabled={adding === product._id || product.stock === 0}
+                      disabled={adding === product?._id || product?.stock === 0}
                     >
                       {/* <ShoppingCart className="w-3 h-3 sm:w-4 sm:h-4" /> */}
                       <span className="hidden xs:inline">
@@ -204,7 +204,7 @@ export default function BestSellingCategories({ onViewAll }) {
                       </span>
                     </button>
                     <button
-                      className="flex-1 bg-red-500 hover:bg-red-600 text-white px-3 sm:px-4 py-2 sm:py-2.5 rounded-md text-xs sm:text-sm font-medium transition-all duration-200 shadow-md hover:shadow-lg"
+                      className="flex-1 bg-red-500 hover:bg-red-600 text-white px-3 sm:px-4 py-2 sm:py-2.5 rounded-md text-[10px] sm:text-sm font-medium transition-all duration-200 shadow-md hover:shadow-lg"
                       onClick={() => handleBuyNow(product)}
                     >
                       BUY NOW

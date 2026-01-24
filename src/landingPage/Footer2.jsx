@@ -38,7 +38,7 @@ const payments = [
 
   return (
     <div className="bg-gray-100 py-12 px-4 border-t-1 border-gray-400">
-      <div className="max-w-7xl mx-auto">
+      <div className=" mx-auto">
         {/* Top Section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           {/* Pay Securely */}

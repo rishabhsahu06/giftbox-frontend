@@ -16,9 +16,9 @@ export const getAllproducts = async (filters = {}) => {
   }
 };
 
-export const getProductById = async (productId) => {
+export const getProductById = async (itemId) => {
   try {
-    const response = await Axios.get(`/api/v1/products/get-product/${productId}`);
+    const response = await Axios.get(`/api/v1/products/get-product/${itemId}`);
     return response.data;
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -26,16 +26,13 @@ export const getProductById = async (productId) => {
   }
 };
 
-export const addToCartPost = async (productId, quantity = 1) => {
+export const addToCartPost = async (data) => {
   try {
-    const response = await Axios.post("/api/v1/cart/add-cart", {
-      productId,
-      quantity,
-    });
+    const response = await Axios.post("/api/v1/cart/add-cart", data);
     return response.data;
   } catch (error) {
-    console.error("Error fetching products:", error);
-    return error;
+    console.error("Error adding to cart:", error);
+    throw error; // Throw error so the frontend can catch it (e.g. show toast)
   }
 };
 
@@ -50,14 +47,14 @@ export const getCartAPI = async () => {
 };
 
 // Remove from cart
-export const removeFromCartAPI = async (productId) => {
-  const res = await Axios.delete(`/api/v1/cart/remove/${productId}`);
+export const removeFromCartAPI = async (itemId) => {
+  const res = await Axios.delete(`/api/v1/cart/remove/${itemId}`);
   return res.data;
 };
 
 // Update cart item qty
-export const updateCartItemAPI = async (productId, quantity) => {
-  const res = await Axios.patch(`/api/v1/cart/update-quantity/${productId}`, {
+export const updateCartItemAPI = async (itemId, quantity) => {
+  const res = await Axios.patch(`/api/v1/cart/update-quantity/${itemId}`, {
     quantity, 
   });
   return res.data;

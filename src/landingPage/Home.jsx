@@ -10,6 +10,8 @@ import BulkGifting from "./Bulkgift";
 import BlogPost from "../pages/CustomerReview";
 import GiftShop from "../pages/GiftShop";
 import AutoSlider from "./Slider";
+import HamperCard from "../pages/HampersGift/HamperCard";
+import HampersPage from "../pages/HampersGift/HampersPage";
 
 const Home = () => {
   // const [loading, setloading] = useState(true);
@@ -20,11 +22,12 @@ const Home = () => {
       <div>
         <LandingSlider />
         <CategoryList />
+        <HampersPage />
         <AutoSlider />
         <CarouselManual />
         <BulkGifting/>
         {/* <section className="mx-auto">
-          <FashionProductCards /> */}
+        <FashionProductCards /> */}
         {/* </section> */}
         <BlogPost/>
         <GiftShop/>

@@ -22,7 +22,8 @@ import About from "./landingPage/About";
 import Supportpage from "./landingPage/support";
 import AllCategoryPage from "./landingPage/Allcategorypage/AllCategoryPage";
 import LoginPage from "./auth/LoginPage";
-import CustomizedPage from "./landingPage/Customize";
+import HamperDetailPage from "./pages/HampersGift/HampersDetailsPage";
+import CustomizedPage from "./landingPage/CustomizeStepsForm/CustomizeMain";
 
 const RouterPage = () => {
   const element = useRoutes([
@@ -43,6 +44,7 @@ const RouterPage = () => {
         { path: Routers.AllCategoryPage, element: <AllCategoryPage /> },
         { path: Routers.oAuthSuccess, element: <OAuthSuccess /> }, // fixed key
         { path: Routers.customize, element: <CustomizedPage /> },
+        { path: Routers.hamperDetail, element: <HamperDetailPage /> },
       ],
     },
     { path: Routers.login, element: <LoginPage /> },

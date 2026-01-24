@@ -1,225 +1,199 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
-import html2pdf from "html2pdf.js";
+import { useLocation, useNavigate } from "react-router-dom";
 import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
+import PageLoader from "../Pageloader/Pageloader";
 import { getOrderById } from "../api/products.api";
 import { MainContent } from "../constants/maincontant";
-import PageLoader from "../Pageloader/Pageloader";
 
 const Invoice = () => {
-  const invoiceRef = useRef();
-  const location = useLocation();
-  const { orderId } = location.state || {};
-  const [invoiceData, setInvoiceData] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const invoiceRef = useRef(null);
+  const { state } = useLocation();
+  const navigate = useNavigate();
+  const orderId = state?.orderId;
 
+  const [invoiceData, setInvoiceData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  /* ================= Fetch Invoice ================= */
   useEffect(() => {
-    if (!orderId) return;
+    if (!orderId) {
+      navigate("/dashboard/myOrders");
+      return;
+    }
+
     const fetchInvoice = async () => {
-      setLoading(true);
       try {
-        const res = await getOrderById();
-        if (res.success) {
-          setInvoiceData(res.order);
-        } else {
-          console.error("Error fetching order:", res.message);
-        }
+        const res = await getOrderById(orderId);
+        const data = res?.data?.data || res?.data || null;
+        setInvoiceData(data);
       } catch (err) {
-        console.error("Error fetching invoice:", err);
+        console.error("Invoice fetch error", err);
+        setInvoiceData(null);
       } finally {
         setLoading(false);
       }
     };
+
     fetchInvoice();
-  }, []);
+  }, [orderId, navigate]);
 
-  if (loading) return <PageLoader loading={loading} />;
-  if (!invoiceData) return <div className="text-center py-10">Loading...</div>;
+  /* ================= Download PDF ================= */
+  const handleDownload = async () => {
+    if (!invoiceRef.current) return;
 
-  const { razorpayOrderId: orderNo, createdAt, items = [], user = {}, address = {} } = invoiceData;
-
-  const totalQuantity = items.reduce((sum, i) => sum + i.quantity, 0);
-  const totalAmounts = items.reduce((sum, i) => sum + i.subtotal, 0);
-  const totalGstAmount = items.reduce(
-    (sum, i) => sum + (i.subtotal * (i?.product?.gst || 0)) / 100,
-    0
-  );
-
-  // ✅ Download as PDF
-  const handleDownload = () => {
-    const element = invoiceRef.current;
-    const images = element.querySelectorAll("img");
-
-    const loadImages = Array.from(images).map(
-      (img) =>
-        new Promise((resolve) => {
-          if (img.complete) resolve();
-          else img.onload = img.onerror = resolve;
-        })
-    );
-
-    Promise.all(loadImages).then(() => {
-      const opt = {
-        margin: 0.5,
-        filename: `Invoice-${invoiceData._id || orderId}.pdf`,
-        image: { type: "jpeg", quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true, allowTaint: true },
-        jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
-      };
-      html2pdf().from(element).set(opt).save();
-    });
-  };
-
-  // ✅ Print invoice
-  const handlePrint = () => {
-    html2canvas(invoiceRef.current, {
+    const canvas = await html2canvas(invoiceRef.current, {
       scale: 2,
       useCORS: true,
-      allowTaint: true,
-    }).then((canvas) => {
-      const dataUrl = canvas.toDataURL("image/png", 1.0);
-      const printWindow = window.open("", "_blank", "width=800,height=600");
-      printWindow.document.write(`
-        <html>
-          <head>
-            <title>Invoice</title>
-            <style>
-              body { margin: 0; padding: 0; }
-              img { width: 100%; }
-            </style>
-          </head>
-          <body onload="window.print();window.close();">
-            <img src="${dataUrl}" style="width:100%;" />
-          </body>
-        </html>
-      `);
-      printWindow.document.close();
+      backgroundColor: "#ffffff",
     });
+
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF("p", "mm", "a4");
+
+    const pdfWidth = 210;
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+    pdf.save(`Invoice-${invoiceData?._id ?? "order"}.pdf`);
   };
 
+  /* ================= Print ================= */
+  const handlePrint = () => window.print();
+
+  if (loading) return <PageLoader />;
+  if (!invoiceData) return null;
+
+  const {
+    _id,
+    createdAt,
+    items = [],
+    user = {},
+    totalAmount = 0,
+  } = invoiceData;
+
   return (
-    <div className="w-full min-h-screen bg-gray-50 flex justify-center py-6 px-2 sm:px-4 md:px-8">
+    <div className="w-full bg-gray-100 py-6 px-2 sm:px-4">
+      {/* ===== Buttons (Hidden in print) ===== */}
+      
+
+      {/* ================= Invoice ================= */}
       <div
         ref={invoiceRef}
-        className="w-full max-w-4xl bg-white md:p-6 p-4 rounded-lg shadow-sm text-gray-800 text-[10px] sm:text-xs md:text-sm"
+        id="invoice-print"
+        className="bg-white max-w-[210mm] mx-auto p-4 sm:p-6 text-[11px] sm:text-sm shadow"
       >
         {/* Header */}
-        <div className="flex flex-col sm:flex-row justify-between gap-4 sm:gap-6 border-b pb-4">
+        <div className="flex justify-between border-b pb-4 mb-4">
           <img
-            src={MainContent.logo}
-            className="h-10 sm:h-14 object-contain"
+            src={MainContent?.logo || "https://via.placeholder.com/120"}
             alt="Logo"
-            crossOrigin="anonymous"
+            className="h-10 object-contain"
           />
-          <div className="text-right text-[10px] sm:text-sm">
-            <h4 className="font-bold text-base sm:text-lg">Hetal Collection</h4>
-            <p>10 Godha colony pagnispaga palsikar Indore 452001</p>
-            <p>Lasudiya Mori, Indore, India - 452010</p>
-            <p>(+91) 9112233507 | hetalsoapstory@gmail.com</p>
+
+          <div className="text-right">
+            <h2 className="font-bold text-lg">Hetal Collection</h2>
+            <p className="text-gray-600">Indore, India</p>
+            <p className="text-gray-600">hetalsoapstory@gmail.com</p>
           </div>
         </div>
 
-        {/* Billing & Shipping */}
-        <div className="flex flex-col sm:flex-row justify-between gap-6 my-4">
+        {/* Info */}
+        <div className="flex justify-between mb-4 bg-gray-50 p-3 rounded">
           <div>
-            <h4 className="font-bold mb-1">Billing Details</h4>
-            <p>FCID: {user?._id}</p>
-            <p>Name: {user?.name}</p>
-            <p>Email: {user?.email}</p>
-            <p>Mobile: {user?.phone}</p>
+            <p className="font-semibold">Billed To</p>
+            <p>{user?.name ?? "Customer"}</p>
+            <p>{user?.email ?? "-"}</p>
+            <p>{user?.phone ?? "-"}</p>
           </div>
-          <div>
-            <h4 className="font-bold mb-1">Shipping Address</h4>
-            <p>Name: {user?.name}</p>
-            <p>Mobile: {address?.phone}</p>
-            <p>
-              {address?.addressLine1}
-              {address?.addressLine2 && `, ${address.addressLine2}`},{" "}
-              {address?.city}, {address?.state} - {address?.pincode}
-            </p>
-          </div>
+
           <div className="text-right">
             <p>
-              INVOICE:{" "}
-              <span className="font-semibold">{orderNo || invoiceData._id}</span>
+              Invoice #:{" "}
+              <span className="font-mono font-bold">
+                {_id?.slice(-6)?.toUpperCase() ?? "-"}
+              </span>
             </p>
-            <p>Order Date: {new Date(createdAt).toLocaleDateString("en-IN")}</p>
+            <p>
+              Date:{" "}
+              {createdAt
+                ? new Date(createdAt).toLocaleDateString("en-IN")
+                : "-"}
+            </p>
           </div>
         </div>
 
-        {/* Items Table */}
-        <div className="overflow-x-auto">
-          <table className="w-full border mt-4 text-[10px] sm:text-xs md:text-sm">
-            <thead>
-              <tr className="bg-gray-200 text-left">
-                <th className="border p-2">#</th>
-                <th className="border p-2">Product</th>
-                <th className="border p-2">Price</th>
-                <th className="border p-2">Qty</th>
-                <th className="border p-2">GST</th>
-                <th className="border p-2">Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              {items.map((item, i) => (
-                <tr key={i}>
-                  <td className="border p-2">{i + 1}</td>
-                  <td className="p-2 flex items-center gap-1 sm:gap-2">
-                    <img
-                      src={
-                        item?.product?.images?.[0]?.image ||
-                        "https://via.placeholder.com/50"
-                      }
-                      className="h-6 w-6 sm:h-8 sm:w-8 object-cover"
-                      alt={item?.product?.name || "Product"}
-                      crossOrigin="anonymous"
-                    />
-                    <span className="truncate max-w-[140px] sm:max-w-[200px]">
-                      {item?.product?.name}
-                    </span>
-                  </td>
-                  <td className="border p-2">
-                    {(item.subtotal / item.quantity).toFixed(2)}
-                  </td>
-                  <td className="border p-2">{item.quantity}</td>
-                  <td className="border p-2">{item?.product?.gst || 0}%</td>
-                  <td className="border p-2">
-                    {(
-                      item.subtotal +
-                      (item.subtotal * (item?.product?.gst || 0)) / 100
-                    ).toFixed(2)}
-                  </td>
-                </tr>
-              ))}
-              <tr className="bg-yellow-100 font-semibold">
-                <td colSpan="3" className="border p-2 text-right">
-                  Total
-                </td>
-                <td className="border p-2">{totalQuantity}</td>
-                <td className="border p-2"></td>
-                <td className="border p-2">
-                  {(totalAmounts + totalGstAmount).toFixed(2)}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        {/* Table */}
+        <table className="w-full border-collapse border mb-4">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="border p-2 text-left">#</th>
+              <th className="border p-2 text-left">Item</th>
+              <th className="border p-2 text-right">Price</th>
+              <th className="border p-2 text-center">Qty</th>
+              <th className="border p-2 text-right">Total</th>
+            </tr>
+          </thead>
 
-        {/* Buttons */}
-        <div className="mt-6 flex flex-wrap gap-4 justify-center">
-          <button
-            onClick={handleDownload}
-            className="bg-red-500 hover:bg-red-600 text-white px-8 py-2 rounded-full font-medium text-xs sm:text-sm"
-          >
-            Download
-          </button>
-          <button
-            onClick={handlePrint}
-            className="bg-green-600 hover:bg-green-700 text-white px-8 py-2 rounded-full font-medium text-xs sm:text-sm"
-          >
-            Print
-          </button>
-        </div>
+          <tbody>
+            {items.length > 0 ? (
+              items.map((item, i) => {
+                const product = item?.product ?? {};
+                const price = Number(
+                  product?.discounted_price ?? product?.price ?? 0
+                );
+                const qty = Number(item?.quantity ?? 0);
+                const rowTotal = price * qty;
+
+                return (
+                  <tr key={item?._id ?? i}>
+                    <td className="border p-2 text-center">{i + 1}</td>
+                    <td className="border p-2">
+                      {product?.name ?? "Product"}
+                    </td>
+                    <td className="border p-2 text-right">₹{price}</td>
+                    <td className="border p-2 text-center">{qty}</td>
+                    <td className="border p-2 text-right">₹{rowTotal}</td>
+                  </tr>
+                );
+              })
+            ) : (
+              <tr>
+                <td colSpan="5" className="border p-4 text-center text-gray-500">
+                  No items found
+                </td>
+              </tr>
+            )}
+          </tbody>
+
+          <tfoot>
+            <tr className="font-bold bg-gray-50">
+              <td colSpan="4" className="border p-2 text-right">
+                Grand Total
+              </td>
+              <td className="border p-2 text-right">₹{totalAmount}</td>
+            </tr>
+          </tfoot>
+        </table>
+
+        <div className="flex justify-center gap-3 mb-4 print:hidden max-w-[210mm] mx-auto">
+        {/* <button
+          onClick={handleDownload}
+          className="px-5 py-2 bg-blue-600 text-white rounded-md"
+        >
+          Download PDF
+        </button> */}
+        <button
+          onClick={handlePrint}
+          className="px-5 py-2 bg-gray-800 text-white rounded-md"
+        >
+          Print
+        </button>
+      </div>
+
+        <p className="text-center text-gray-500 text-xs mt-6">
+          This is a computer generated invoice.
+        </p>
       </div>
     </div>
   );

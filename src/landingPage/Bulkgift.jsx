@@ -3,7 +3,7 @@ import image from "../assets/bulk-gifting.png"
 function BulkGifting() {
     return (
         <section className="container  px-4 sm:px- lg:px-8">
-            <div className="mt-12 w-full">
+            <div className=" w-full">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-19 items-center">
                     {/* Image Section */}
                     <div className="flex justify-center lg:justify-start order-2 lg:order-1">

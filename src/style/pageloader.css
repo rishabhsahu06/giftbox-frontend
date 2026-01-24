@@ -1,0 +1,68 @@
+.page-loader {
+  position: fixed;
+  inset: 0;
+  /* background: rgba(0, 0, 0, 0); */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999999;
+  backdrop-filter: blur(1px);
+}
+
+.loader-wrapper {
+  text-align: center;
+}
+
+/* 🔄 Spinner */
+.glow-spinner {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 4px solid rgba(255, 200, 120, 0.2);
+  border-top: 4px solid #ed426a;
+  animation: spin 1s linear infinite;
+  box-shadow:
+    0 0 15px rgba(240, 94, 58, 0.6),
+    0 0 35px rgba(232, 20, 109, 0.35);
+  margin: 0 auto 18px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 📝 Text */
+.loader-text {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: #ef1e60;
+  text-shadow: 0 0 10px rgba(244, 58, 73, 0.6);
+}
+
+/* 🔴🟠🟡 Dots animation */
+.dots span {
+  animation: blink 1.4s infinite both;
+  font-size: 25x;
+}
+
+.dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0.2;
+  }
+  20% {
+    opacity: 5;
+  }
+  100% {
+    opacity: 0.2;
+  }
+}

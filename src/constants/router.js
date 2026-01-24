@@ -24,4 +24,7 @@ export const Routers = {
   register: "/register",
   oAuthSuccess: "/oauth2/redirect",
   customize: "/customize",
+
+  // ========hanper detail page=============?
+  hamperDetail: "/hamperdetails/:id",
 };

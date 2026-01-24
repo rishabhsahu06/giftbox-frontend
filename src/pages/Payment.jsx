@@ -4,15 +4,26 @@ import { toast } from "sonner";
 import { createOrderAPI, verifyPaymentAPI } from "../api/address.api";
 import PageLoader from "../Pageloader/Pageloader";
 import { motion, AnimatePresence } from "framer-motion";
+
 const Payment = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  // Safe destructuring with fallback to prevent crashes
   const { addressId, totalAmount, totalMRP, totalSavings } = location.state || {};
 
   const [loading, setLoading] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("cod");
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
+  // 1. SAFETY CHECK: Redirect if data is missing (e.g., on page refresh)
+  useEffect(() => {
+    if (!addressId || !totalAmount) {
+      toast.error("Session expired. Please select an address again.");
+      navigate("/cart"); // Redirect to Cart or Address selection
+    }
+  }, [addressId, totalAmount, navigate]);
+
+  // 2. Success Modal Timer
   useEffect(() => {
     if (showSuccessModal) {
       const timer = setTimeout(() => {
@@ -27,13 +38,16 @@ const Payment = () => {
     try {
       setLoading(true);
       const res = await createOrderAPI({ addressId, paymentMethod: "COD" });
-      if (res?.success) {
+      
+      // Check response structure (adjust based on your actual API response)
+      if (res?.success || res?.status === 201 || res?.data?.success) {
         setShowSuccessModal(true);
       } else {
         toast.error(res?.message || "COD order failed");
       }
     } catch (err) {
-      toast.error("COD order failed");
+      console.error("COD Error:", err);
+      toast.error(err.response?.data?.message || "COD order failed");
     } finally {
       setLoading(false);
     }
@@ -48,7 +62,9 @@ const Payment = () => {
         amount: totalAmount,
         paymentMethod: "payOnline",
       });
-      const order = orderRes?.data?.razorpayOrder;
+
+      // Adjust based on your backend response structure (ApiResponse object)
+      const order = orderRes?.data?.razorpayOrder || orderRes?.razorpayOrder;
 
       if (!order) {
         toast.error("Failed to create Razorpay order");
@@ -77,17 +93,18 @@ const Payment = () => {
               amount: order.amount,
             });
 
-            if (verifyRes.success) {
+            if (verifyRes?.success || verifyRes?.data?.success) {
               setShowSuccessModal(true);
             } else {
-              toast.error(verifyRes.message || "Payment verification failed");
+              toast.error(verifyRes?.message || "Payment verification failed");
             }
           } catch (err) {
+            console.error("Verification Error:", err);
             toast.error("Something went wrong during payment verification");
           }
         },
         prefill: { name: "User", email: "user@example.com" },
-        theme: { color: "#007bff" },
+        theme: { color: "#000000" },
       };
 
       const rzp1 = new window.Razorpay(options);
@@ -96,10 +113,9 @@ const Payment = () => {
       });
       rzp1.open();
 
-
-      // new window.Razorpay(options).open();
     } catch (err) {
-      toast.error("Payment initiation failed");
+      console.error("Payment Init Error:", err);
+      toast.error(err.response?.data?.message || "Payment initiation failed");
     } finally {
       setLoading(false);
     }
@@ -118,8 +134,6 @@ const Payment = () => {
     }
   };
 
-  // if (loading) return <PageLoader />;
-
   return (
     <>
       {loading && <PageLoader loading={loading} />}
@@ -133,10 +147,11 @@ const Payment = () => {
           <div className="space-y-4">
             {/* COD */}
             <label
-              className={`flex items-center justify-between gap-4 p-4 border rounded-lg cursor-pointer transition-all ${paymentMethod === "cod"
-                ? "border-black bg-gray-50"
-                : "border-gray-200 hover:border-gray-300"
-                }`}
+              className={`flex items-center justify-between gap-4 p-4 border rounded-lg cursor-pointer transition-all ${
+                paymentMethod === "cod"
+                  ? "border-black bg-gray-50"
+                  : "border-gray-200 hover:border-gray-300"
+              }`}
             >
               <div className="flex items-center gap-3">
                 <input
@@ -149,16 +164,16 @@ const Payment = () => {
                 />
                 <span className="text-gray-800 font-medium">Cash on Delivery (COD)</span>
               </div>
-              
               <span className="text-gray-500 text-sm">Pay with cash</span>
             </label>
 
             {/* Online Payment */}
             <label
-              className={`flex items-center justify-between gap-4 p-4 border rounded-lg cursor-pointer transition-all ${paymentMethod === "payOnline"
-                ? "border-black bg-gray-50"
-                : "border-gray-200 hover:border-gray-300"
-                }`}
+              className={`flex items-center justify-between gap-4 p-4 border rounded-lg cursor-pointer transition-all ${
+                paymentMethod === "payOnline"
+                  ? "border-black bg-gray-50"
+                  : "border-gray-200 hover:border-gray-300"
+              }`}
             >
               <div className="flex items-center gap-3">
                 <input
@@ -180,25 +195,38 @@ const Payment = () => {
         <div className="bg-white rounded-lg shadow-md p-6 sticky top-6">
           <h3 className="text-lg font-semibold mb-6 text-gray-900">PRICE DETAILS</h3>
           <div className="space-y-4">
-            <div className="flex justify-between text-gray-700"><span>Total MRP</span><span>₹{totalMRP?.toFixed(2) || 0}</span></div>
-            <div className="flex justify-between text-green-600"><span>Offer Discount</span><span>- ₹{totalSavings?.toFixed(2) || 0}</span></div>
-            <div className="flex justify-between text-gray-700"><span>Delivery Fee</span><span>Free</span></div>
+            <div className="flex justify-between text-gray-700">
+              <span>Total MRP</span>
+              <span>₹{totalMRP?.toFixed(2) || 0}</span>
+            </div>
+            <div className="flex justify-between text-green-600">
+              <span>Offer Discount</span>
+              <span>- ₹{totalSavings?.toFixed(2) || 0}</span>
+            </div>
+            <div className="flex justify-between text-gray-700">
+              <span>Delivery Fee</span>
+              <span className="text-green-600">Free</span>
+            </div>
             <hr />
-            <div className="flex justify-between font-semibold text-lg"><span>Total Payable Amount</span><span>₹{totalAmount?.toFixed(2) || 0}</span></div>
+            <div className="flex justify-between font-semibold text-lg">
+              <span>Total Payable Amount</span>
+              <span>₹{totalAmount?.toFixed(2) || 0}</span>
+            </div>
           </div>
 
           <button
             onClick={handlePayment}
-            disabled={!paymentMethod}
-            className={`w-full mt-6 py-4 rounded-lg font-semibold text-lg transition-colors cursor-pointer ${paymentMethod ? "bg-black text-white hover:bg-gray-800" : "bg-gray-200 text-gray-500 cursor-not-allowed"
-              }`}
+            disabled={!paymentMethod || loading}
+            className={`w-full mt-6 py-4 rounded-lg font-semibold text-lg transition-colors cursor-pointer ${
+              paymentMethod && !loading
+                ? "bg-black text-white hover:bg-gray-800"
+                : "bg-gray-200 text-gray-500 cursor-not-allowed"
+            }`}
           >
-            CONTINUE
+            {loading ? "Processing..." : "CONTINUE"}
           </button>
         </div>
       </div>
-
-
 
       {/* Success Modal */}
       <AnimatePresence>
@@ -258,9 +286,7 @@ const Payment = () => {
           </motion.div>
         )}
       </AnimatePresence>
-
     </>
-
   );
 };
 

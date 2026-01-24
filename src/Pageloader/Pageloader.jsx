@@ -1,21 +1,22 @@
-import React from "react";
-import Lottie from "lottie-react";
-import loadingAnimation from "../assets/lottie.json"
+import "../style/pageloader.css";
 
-const PageLoader = ({ loading }) => {
-    return (
-      <div
-        className={`fixed inset-0 flex items-center justify-center bg-black/20  z-50 transition-opacity duration-500 ${
-          loading ? "opacity-100 visible" : "opacity-0 invisible"
-        }`}
-      >
-        <Lottie
-          animationData={loadingAnimation}
-          loop
-          autoplay
-          style={{ width: 100, height: 150 }}
-        />
+const PageLoader = () => {
+  return (
+    <div className="page-loader">
+      <div className="loader-wrapper">
+        <div className="glow-spinner"></div>
+
+        <div className="loader-text">
+          Loading Gifts
+          <span className="dots">
+            <span>.</span>
+            <span>.</span>
+            <span>.</span>
+          </span>
+        </div>
       </div>
-    );
-  };
+    </div>
+  );
+};
+
 export default PageLoader;

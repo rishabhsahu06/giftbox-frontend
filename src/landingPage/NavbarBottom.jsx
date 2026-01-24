@@ -27,7 +27,7 @@ const NavbarBottom = ({ mobileOpen, setMobileOpen, isActiveNavItem, setShowEnqui
                 const res = await getParentCategoriesBySubcategory();
                 if (res?.data) {
                     // ✅ Sort categories alphabetically for better UX
-                    const sortedCategories = res.data.sort((a, b) => 
+                    const sortedCategories = res.data.sort((a, b) =>
                         a.name.localeCompare(b.name)
                     );
                     setCategories(sortedCategories);
@@ -60,11 +60,11 @@ const NavbarBottom = ({ mobileOpen, setMobileOpen, isActiveNavItem, setShowEnqui
     // Navigate to category with filter
     const handleCategoryClick = (categoryId, categoryName) => {
         // Navigate to all category page with category filter applied
-        navigate('/allcategory', { 
-            state: { 
+        navigate('/allcategory', {
+            state: {
                 selectedCategory: categoryName,
-                categoryId: categoryId 
-            } 
+                categoryId: categoryId
+            }
         });
     };
 
@@ -72,18 +72,18 @@ const NavbarBottom = ({ mobileOpen, setMobileOpen, isActiveNavItem, setShowEnqui
     const handleSubcategoryClick = (subcategoryId, subcategoryName, e) => {
         e.preventDefault();
         e.stopPropagation();
-        navigate('/allcategory', { 
-            state: { 
+        navigate('/allcategory', {
+            state: {
                 selectedCategory: subcategoryName,
-                categoryId: subcategoryId 
-            } 
+                categoryId: subcategoryId
+            }
         });
     };
 
     return (
-        <nav className="bg-white border-b border-gray-200  top-[64px] sm:top-[80px] z-40">
+        <nav className="bg-gray-50 border-b border-gray-200  top-[64px] sm:top-[80px] z-40">
             {/* ---------- DESKTOP NAV ---------- */}
-            <div className="max-w-7xl mx-auto px-2 hidden lg:flex items-center justify-between py-3">
+            <div className="max-w mx-auto px-2 hidden lg:flex items-center justify-between py-3 z-[999]">
                 {/* CATEGORY SECTION */}
                 <div className="flex items-center space-x-2">
                     {/* Static Links */}
@@ -97,11 +97,10 @@ const NavbarBottom = ({ mobileOpen, setMobileOpen, isActiveNavItem, setShowEnqui
                                 <div key={item.label} className="relative group">
                                     <Link
                                         to={item.href}
-                                        className={`px-3 py-2 rounded text-sm font-medium transition-colors flex items-center gap-1 ${
-                                            isActiveNavItem(item.href)
+                                        className={`px-3 py-2 rounded text-[17px] font-medium transition-colors flex items-center gap-1 ${isActiveNavItem(item.href)
                                                 ? "bg-black text-white"
                                                 : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
-                                        }`}
+                                            }`}
                                     >
                                         {item.label}
                                         <ChevronDown className="w-3 h-3" />
@@ -111,8 +110,8 @@ const NavbarBottom = ({ mobileOpen, setMobileOpen, isActiveNavItem, setShowEnqui
                                     {!loading && categories.length > 0 && (
                                         <div className="absolute left-0 top-full mt-1 w-[700px] grid grid-cols-3 gap-2 bg-white border border-gray-200 shadow-xl rounded-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 ease-in-out z-50 p-3 max-h-[400px] overflow-y-auto">
                                             {categories.map((cat) => (
-                                                <div 
-                                                    key={cat._id} 
+                                                <div
+                                                    key={cat._id}
                                                     className="border rounded-md hover:bg-gray-50 transition"
                                                 >
                                                     <button
@@ -127,7 +126,7 @@ const NavbarBottom = ({ mobileOpen, setMobileOpen, isActiveNavItem, setShowEnqui
                                                                 loading="lazy"
                                                             />
                                                         )}
-                                                        <span className="font-medium text-sm">{cat.name}</span>
+                                                        <span className="font-medium text-[15px]">{cat.name}</span>
                                                     </button>
 
                                                     {/* Subcategories */}
@@ -157,15 +156,13 @@ const NavbarBottom = ({ mobileOpen, setMobileOpen, isActiveNavItem, setShowEnqui
                             <Link
                                 key={item.href}
                                 to={item.href}
-                                className={`px-3 py-2 rounded text-sm font-medium transition-colors ${
-                                    isActiveNavItem(item.href)
+                                className={`px-3 py-2 rounded text-[15px] font-medium transition-colors ${isActiveNavItem(item.href)
                                         ? "bg-black text-white"
                                         : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
-                                } ${
-                                    isCustomized
+                                    } ${isCustomized
                                         ? "bg-gradient-to-r from-pink-500 via-red-500 to-yellow-400 text-white shadow-lg animate-pulse"
                                         : ""
-                                }`}
+                                    }`}
                             >
                                 {item.label}
                             </Link>
@@ -177,11 +174,10 @@ const NavbarBottom = ({ mobileOpen, setMobileOpen, isActiveNavItem, setShowEnqui
                         <div key={cat._id} className="relative group">
                             <button
                                 onClick={() => handleCategoryClick(cat._id, cat.name)}
-                                className={`px-3 py-2 rounded text-sm font-medium transition-colors flex items-center gap-1 ${
-                                    isActiveNavItem(`/allcategory/${cat._id}`)
+                                className={`px-3 py-2 rounded text-[17px] font-medium transition-colors flex items-center gap-1 ${isActiveNavItem(`/allcategory/${cat._id}`)
                                         ? "bg-black text-white"
                                         : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
-                                }`}
+                                    }`}
                             >
                                 {cat.name}
                                 {cat.subCategories?.length > 0 && (
@@ -254,11 +250,10 @@ const NavbarBottom = ({ mobileOpen, setMobileOpen, isActiveNavItem, setShowEnqui
                         <Link
                             key={item.href}
                             to={item.href}
-                            className={`px-4 py-2 rounded text-sm font-medium transition-colors ${
-                                isActiveNavItem(item.href)
+                            className={`px-4 py-2 rounded text-[17px] font-medium transition-colors ${isActiveNavItem(item.href)
                                     ? "bg-black text-white"
                                     : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
-                            }`}
+                                }`}
                         >
                             {item.label}
                         </Link>
@@ -276,13 +271,13 @@ const NavbarBottom = ({ mobileOpen, setMobileOpen, isActiveNavItem, setShowEnqui
                     />
 
                     {/* Drawer */}
-                    <div className="absolute top-0 right-0 h-full w-4/5 max-w-sm bg-white shadow-2xl border-l-4 border-[#cd5d63] rounded-l-2xl transform transition-transform duration-500 ease-in-out translate-x-0 overflow-y-auto">
+                    <div className="absolute top-0 right-0 h-full w-4/5 max-w-sm bg-white shadow-2xl border-l-4 border-[#cd5d63] rounded-l-2xl transform transition-transform duration-500 ease-in-out translate-x-0 overflow-y-auto ">
                         <div className="p-6">
                             {/* Header */}
                             <div className="flex items-center justify-between mb-6">
                                 <h2 className="text-xl font-bold text-gray-900">Menu</h2>
-                                <button 
-                                    onClick={() => setMobileOpen(false)} 
+                                <button
+                                    onClick={() => setMobileOpen(false)}
                                     className="text-gray-500 hover:text-gray-700"
                                 >
                                     <X className="w-6 h-6" />
@@ -310,7 +305,7 @@ const NavbarBottom = ({ mobileOpen, setMobileOpen, isActiveNavItem, setShowEnqui
                                         setMobileOpen(false);
                                         handleProtectedNav("/cart");
                                     }}
-                                    className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 mb-2"
+                                    className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 "
                                 >
                                     <ShoppingCart className="w-5 h-5 text-gray-700" />
                                     <span className="text-sm font-medium text-gray-900">Cart</span>
@@ -319,7 +314,16 @@ const NavbarBottom = ({ mobileOpen, setMobileOpen, isActiveNavItem, setShowEnqui
 
                             {/* Categories */}
                             <div className="mb-6">
-                                <h3 className="text-sm font-bold text-gray-500 uppercase mb-3 px-3">
+
+                                <Link
+                                    to="/customize"
+                                    onClick={() => setMobileOpen(false)}
+                                    className="w-full flex items-center p-3  bg-gradient-to-r from-pink-500 via-red-500 to-yellow-400 text-white shadow-lg animate-pulse"
+                                >
+                                    Customize
+                                </Link>
+
+                                <h3 className="text-sm mt-3 font-bold text-gray-500 uppercase mb-3 px-3">
                                     Categories
                                 </h3>
 
@@ -357,15 +361,15 @@ const NavbarBottom = ({ mobileOpen, setMobileOpen, isActiveNavItem, setShowEnqui
                                                 )}
                                                 {cat.name}
                                             </button>
-                                            
+
                                             {/* Subcategories */}
                                             {cat.subCategories?.map((sub) => (
                                                 <button
                                                     key={sub._id}
                                                     onClick={() => {
-                                                        handleSubcategoryClick(sub._id, sub.name, { 
-                                                            preventDefault: () => {}, 
-                                                            stopPropagation: () => {} 
+                                                        handleSubcategoryClick(sub._id, sub.name, {
+                                                            preventDefault: () => { },
+                                                            stopPropagation: () => { }
                                                         });
                                                         setMobileOpen(false);
                                                     }}

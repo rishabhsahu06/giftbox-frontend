@@ -49,7 +49,7 @@ const NavbarMain = () => {
     <>
       {/* Enquiry Modal */}
       {showEnquiryModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+        <div className="fixed inset-0 z-20 flex items-center justify-center bg-black/50">
           <div className="bg-white rounded-2xl p-6 sm:p-8 max-w-md w-full relative shadow-xl animate-fadeIn">
             <button
               onClick={() => setShowEnquiryModal(false)}
@@ -81,7 +81,7 @@ const NavbarMain = () => {
       )}
 
       {/* Top Navbar */}
-      <header className="w-full bg-white border-b border-gray-200  top-0 z-50 shadow-sm">
+      <header className="w-full bg-white border-b border-gray-200  top-0 shadow-sm">
         <div className="mx-auto md:px-9 px-4">
           <div className="flex items-center justify-between h-16 sm:h-20">
             {/* Logo */}
