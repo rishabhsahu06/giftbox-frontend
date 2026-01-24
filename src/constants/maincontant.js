@@ -14,8 +14,8 @@ export const MainContent = {
 };
 export const backendConfig = {
 
-  base: "http://backend.hetalsoapstory.in/",
-  origin: "http://backend.hetalsoapstory.in/api",
+  base: "https://backend.hetalsoapstory.in/",
+  origin: "https://backend.hetalsoapstory.in/api",
   
   // base:"https://2w1qtkhf-3000.inc1.devtunnels.ms/",
   // origin:"https://2w1qtkhf-3000.inc1.devtunnels.ms/api",
