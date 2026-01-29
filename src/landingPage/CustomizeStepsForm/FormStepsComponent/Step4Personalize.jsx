@@ -77,7 +77,7 @@ export default function Step4Personalization() {
             className="flex gap-4 bg-white border rounded-xl p-4 shadow-sm"
           >
             <img
-              src={p.images?.[0]}
+              src={p?.images?.[0]}
               className="w-20 h-20 rounded-lg object-cover"
             />
 

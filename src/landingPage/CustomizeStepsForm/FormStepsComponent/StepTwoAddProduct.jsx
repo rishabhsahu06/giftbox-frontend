@@ -35,7 +35,7 @@ export default function Step2AddProducts() {
       {/* ✅ Use productList instead of products */}
       {productList.length > 0 ? (
         productList.map((p) => {
-          const active = selectedProducts.some((sp) => sp._id === p._id);
+          const active = selectedProducts.some((sp) => sp?._id === p._id);
           return (
             <div
               key={p._id}
@@ -45,12 +45,12 @@ export default function Step2AddProducts() {
               }`}
             >
               <img 
-                src={p.images?.[0]} 
+                src={p?.images?.[0]} 
                 className="h-40 w-full object-cover rounded" 
-                alt={p.name} 
+                alt={p?.name} 
               />
-              <h4 className="mt-2 font-semibold">{p.name}</h4>
-              <p className="text-sm text-gray-500">₹{p.discounted_price}</p>
+              <h4 className="mt-2 font-semibold">{p?.name}</h4>
+              <p className="text-sm text-gray-500">₹{p?.discounted_price}</p>
               <button className="mt-2 text-sm text-red-500 font-semibold">
                 {active ? "REMOVE" : "ADD PRODUCT"}
               </button>

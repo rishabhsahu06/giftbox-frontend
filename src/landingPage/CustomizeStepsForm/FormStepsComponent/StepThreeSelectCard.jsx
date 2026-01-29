@@ -15,7 +15,7 @@ export default function Step3AddCard() {
     <div className="grid grid-cols-2 md:grid-cols-4 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6">
       {cards?.map((card) => (
         <div
-          key={card._id}
+          key={card?._id}
           onClick={() => setSelectedCard(card)}
           className={`p-1 border rounded-lg cursor-pointer transition flex flex-col ${
             selectedCard?._id === card?._id
@@ -24,11 +24,11 @@ export default function Step3AddCard() {
           }`}
         >
           <img 
-            src={card.image} 
-            alt={card.name}
+            src={card?.image} 
+            alt={card?.name}
             className="h-40 w-full object-cover rounded mb-3" 
           />
-          <h4 className="font-semibold text-center">{card.name}</h4>
+          <h4 className="font-semibold text-center">{card?.name}</h4>
         </div>
       ))}
     </div>
