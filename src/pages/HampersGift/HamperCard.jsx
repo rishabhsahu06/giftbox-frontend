@@ -45,7 +45,7 @@ const HamperCard = ({ hamper }) => {
 
         {/* Action Button */}
         <button 
-          className="w-full bg-black text-white py-2 rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors"
+          className="w-full bg-black text-white py-2 rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors cursor-pointer"
           onClick={() => navigate(`/hamperdetails/${hamper._id}`)}
         >
           View Details

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useCallback } from "react";
 import {
   ChevronUp,
   ChevronDown,
@@ -43,7 +43,7 @@ export default function HamperDetailPage() {
         if (!data?._id) throw new Error("Invalid hamper");
 
         setHamper(data);
-        setSelectedImage(safeImg(data.image));
+        setSelectedImage(safeImg(data?.image));
       } catch (err) {
         console.error(err);
         toast.error("Failed to load hamper");
@@ -58,23 +58,30 @@ export default function HamperDetailPage() {
   /* ================= THUMBNAILS ================= */
   const thumbnails = useMemo(() => {
     if (!hamper) return [];
+
     return [
-      hamper.image && { label: "Hamper", image: hamper.image },
-      hamper.category?.image && {
+      hamper?.image && { label: "Hamper", image: hamper?.image },
+      hamper?.category?.image && {
         label: "Category",
-        image: hamper.category.image,
+        image: hamper?.category?.image,
       },
-      hamper.box?.image && { label: "Box", image: hamper.box.image },
-      hamper.card?.image && { label: "Card", image: hamper.card.image },
+      hamper?.box?.image && {
+        label: "Box",
+        image: hamper?.box?.image,
+      },
+      hamper?.card?.image && {
+        label: "Card",
+        image: hamper?.card?.image,
+      },
     ].filter(Boolean);
   }, [hamper]);
 
   /* ================= ACTIONS ================= */
-  const changeQty = (type) => {
+  const changeQty = useCallback((type) => {
     setQuantity((q) =>
       type === "inc" ? q + 1 : q > 1 ? q - 1 : q
     );
-  };
+  }, []);
 
   const handleAddToCart = async () => {
     if (!localStorage.getItem("accessToken")) {
@@ -85,7 +92,7 @@ export default function HamperDetailPage() {
 
     try {
       await addToCart({
-        itemId: hamper._id,
+        itemId: hamper?._id,
         quantity,
       });
       toast.success("Hamper added to cart");
@@ -105,7 +112,7 @@ export default function HamperDetailPage() {
     );
   }
 
-  if (!hamper) {
+  if (!hamper?._id) {
     return (
       <p className="text-center py-20 text-gray-500">
         Hamper not found
@@ -114,12 +121,12 @@ export default function HamperDetailPage() {
   }
 
   const discount =
-    hamper.mrp_price && hamper.price
+    hamper?.mrp_price && hamper?.price
       ? Math.round(
-          ((hamper.mrp_price - hamper.price) /
-            hamper.mrp_price) *
-            100
-        )
+        ((hamper.mrp_price - hamper.price) /
+          hamper.mrp_price) *
+        100
+      )
       : 0;
 
   /* ================= UI ================= */
@@ -136,67 +143,58 @@ export default function HamperDetailPage() {
           </button>
           <ChevronRight className="w-4 h-4" />
           <span className="font-semibold capitalize">
-            {hamper.category?.name || "Gift Hamper"}
+            {hamper?.category?.name || "Gift Hamper"}
           </span>
         </div>
 
         {/* MAIN GRID */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           {/* ================= LEFT: IMAGES ================= */}
           <div className="flex flex-col lg:flex-row gap-4">
             {/* Thumbnails */}
-            {thumbnails.length > 0 && (
+            {thumbnails?.length > 0 && (
               <div
                 className="
-                  flex lg:flex-col gap-3
-                  order-2 lg:order-1
-                  overflow-x-auto lg:overflow-y-auto
-                "
+    flex lg:flex-col gap-3
+    order-2 lg:order-1
+    lg:justify-start
+    lg:h-[520px]
+  "
               >
-                {thumbnails.map((t, i) => (
-                  <button
-                    key={i}
-                    onClick={() =>
-                      setSelectedImage(safeImg(t.image))
-                    }
-                    className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border-2 flex-shrink-0
-                      ${
-                        selectedImage === t.image
+                {thumbnails.map((t, i) => {
+                  const img = safeImg(t?.image);
+                  const isActive = selectedImage === img;
+
+                  return (
+                    <button
+                      key={i}
+                      onClick={() => setSelectedImage(img)}
+                      className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border-2 flex-shrink-0 transition
+                        ${isActive
                           ? "border-black"
                           : "border-gray-200 hover:border-gray-400"
-                      }`}
-                  >
-                    <img
-                      src={safeImg(t.image)}
-                      alt={t.label}
-                      className="w-full h-full object-cover"
-                    />
-                    <span className="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[9px] text-center py-0.5">
-                      {t.label}
-                    </span>
-                  </button>
-                ))}
+                        }`}
+                    >
+                      <img
+                        src={img}
+                        alt={t?.label}
+                        className="w-full h-full object-cover"
+                      />
+                      <span className="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[9px] text-center py-0.5">
+                        {t?.label}
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
             )}
 
-            {/* BIG IMAGE (PERFECT MOBILE + DESKTOP) */}
+            {/* BIG IMAGE */}
             <div className="w-full flex justify-center order-1 lg:order-2">
-              <div
-                className="
-                  w-full
-                  aspect-square
-                  bg-gray-50
-                  rounded-2xl
-                  overflow-hidden
-
-                  /* desktop size control only */
-                  lg:max-w-[480px]
-                  xl:max-w-[520px]
-                "
-              >
+              <div className="w-full aspect-square bg-gray-50 rounded-2xl overflow-hidden lg:max-w-[520px]">
                 <img
                   src={safeImg(selectedImage)}
-                  alt={hamper.name}
+                  alt={hamper?.name}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -207,18 +205,20 @@ export default function HamperDetailPage() {
           <div className="flex flex-col justify-between">
             <div>
               <h1 className="text-2xl md:text-3xl font-bold mb-2">
-                {hamper.name}
+                {hamper?.name}
               </h1>
 
               <div className="flex items-center gap-3 mb-3">
                 <span className="text-2xl font-bold">
-                  ₹ {hamper.price}
+                  ₹ {hamper?.price}
                 </span>
-                {hamper.mrp_price && (
+
+                {hamper?.mrp_price && (
                   <span className="line-through text-gray-400">
-                    ₹ {hamper.mrp_price}
+                    ₹ {hamper?.mrp_price}
                   </span>
                 )}
+
                 {discount > 0 && (
                   <span className="text-green-600 font-semibold">
                     {discount}% OFF
@@ -229,7 +229,7 @@ export default function HamperDetailPage() {
               {/* DESCRIPTION */}
               <div className="border rounded-xl mb-4">
                 <button
-                  onClick={() => setShowDesc(!showDesc)}
+                  onClick={() => setShowDesc((s) => !s)}
                   className="w-full flex justify-between p-4"
                 >
                   <span className="font-semibold">
@@ -239,7 +239,7 @@ export default function HamperDetailPage() {
                 </button>
                 {showDesc && (
                   <p className="px-4 pb-4 text-sm text-gray-600">
-                    {hamper.description ||
+                    {hamper?.description ||
                       "No description available."}
                   </p>
                 )}
@@ -248,7 +248,7 @@ export default function HamperDetailPage() {
               {/* WHAT'S INSIDE */}
               <div className="border rounded-xl mb-6">
                 <button
-                  onClick={() => setShowInside(!showInside)}
+                  onClick={() => setShowInside((s) => !s)}
                   className="w-full flex justify-between p-4"
                 >
                   <span className="font-semibold">
@@ -259,19 +259,20 @@ export default function HamperDetailPage() {
 
                 {showInside && (
                   <div className="px-4 pb-4 text-sm text-gray-700 space-y-2">
-                    {hamper.box && (
+                    {hamper?.box && (
                       <div className="flex justify-between">
                         <span>Box</span>
                         <span className="font-medium">
-                          {hamper.box.name}
+                          {hamper?.box?.name}
                         </span>
                       </div>
                     )}
-                    {hamper.card && (
+
+                    {hamper?.card && (
                       <div className="flex justify-between">
                         <span>Card</span>
                         <span className="font-medium">
-                          {hamper.card.name}
+                          {hamper?.card?.name}
                         </span>
                       </div>
                     )}
@@ -303,7 +304,7 @@ export default function HamperDetailPage() {
                   Sub Total
                 </span>
                 <span className="font-bold text-xl">
-                  ₹ {(hamper.price * quantity).toFixed(2)}
+                  ₹ {(hamper?.price * quantity).toFixed(2)}
                 </span>
               </div>
             </div>
