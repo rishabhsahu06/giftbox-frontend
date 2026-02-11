@@ -11,6 +11,7 @@ export const Routers = {
   invoice: "/dashboard/invoice",
   products: "/products",
   about: "/aboutus",
+  termsCondition: "/terms-condition",
   support: "/support",
 
   

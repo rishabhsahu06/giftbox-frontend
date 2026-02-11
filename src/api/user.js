@@ -37,7 +37,7 @@ export const verifyOTP = async (email, otp) => {
 
 export const sendForgotPasswordEmail = async ({ email }) => {
   try {
-    return Axios.post("/user/forget-password", { email });
+    return Axios.post("/api/v1/auth/forgot-password", { email });
   } catch (error) {
     console.error("Error sending forgot password email:", error);
     return error;

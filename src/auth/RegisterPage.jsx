@@ -7,6 +7,7 @@ import image from "../assets/loginsingup/signup.png";
 import { userRegister, verifyOTP } from "../api/user";
 import { toast } from "sonner";
 import PageLoader from "../Pageloader/Pageloader";
+import { Routers } from "../constants/router";
 // import OTPPopup from "./OTPPopup";
 // import { userRegister } from "../api/user";
 
@@ -186,7 +187,7 @@ const RegisterPage = () => {
               <div className="flex items-center gap-2 text-sm">
                 <input type="checkbox" id="terms" className="h-4 w-4 accent-yellow-500" required />
                 <label htmlFor="terms" className="text-gray-700">
-                  I agree to the <Link to="/terms" className="text-yellow-600 hover:underline">Terms & Conditions</Link>
+                  I agree to the <Link to={Routers.termsCondition} className="text-yellow-600 hover:underline">Terms & Conditions</Link>
                 </label>
               </div>
 

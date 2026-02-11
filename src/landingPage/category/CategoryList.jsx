@@ -26,6 +26,36 @@ export default function BestSellingCategories({ onViewAll }) {
   const { addToCart } = useCart();
 
   // Fetch products based on active category
+  // useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     setLoading(true);
+  //     try {
+  //       const requestBody = {
+  //         sortBy: "sales",
+  //         sortOrder: "desc",
+  //         inStock: "true",
+  //       };
+
+  //       // Only add tag filter if category selected
+  //       if (activeCategory) {
+  //         requestBody.tags = activeCategory;
+  //       }
+
+  //       const res = await getAllproducts(requestBody);
+  //       const fetchedProducts = res?.data?.products || [];
+  //       setProducts(fetchedProducts);
+  //     } catch (err) {
+  //       console.error("Failed to fetch products:", err);
+  //       toast.error("Failed to load products");
+  //       setProducts([]);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchProducts();
+  // }, [activeCategory]);
+
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true);
@@ -34,9 +64,9 @@ export default function BestSellingCategories({ onViewAll }) {
           sortBy: "sales",
           sortOrder: "desc",
           inStock: "true",
+          isActive: "true",   // ← ye add kar do
         };
 
-        // Only add tag filter if category selected
         if (activeCategory) {
           requestBody.tags = activeCategory;
         }
@@ -55,7 +85,6 @@ export default function BestSellingCategories({ onViewAll }) {
 
     fetchProducts();
   }, [activeCategory]);
-
   // Handle add to cart
   const handleAddCart = async (product) => {
     const token = localStorage.getItem("accessToken");
@@ -114,11 +143,10 @@ export default function BestSellingCategories({ onViewAll }) {
           {categories.map((category) => (
             <button
               key={category}
-              className={`rounded-full px-4 sm:px-6 py-2 text-xs sm:text-sm font-medium transition-all duration-200 ${
-                activeCategory === category
+              className={`rounded-full px-4 sm:px-6 py-2 text-xs sm:text-sm font-medium transition-all duration-200 ${activeCategory === category
                   ? "bg-red-500 hover:bg-red-600 text-white shadow-md"
                   : "bg-white hover:bg-gray-50 text-gray-700 border border-gray-300 hover:border-gray-400"
-              }`}
+                }`}
               onClick={() => setActiveCategory(category)}
             >
               {category}
@@ -182,9 +210,8 @@ export default function BestSellingCategories({ onViewAll }) {
 
                   <div className="mb-3">
                     <span
-                      className={`text-xs font-medium ${
-                        product?.stock > 0 ? "text-green-600" : "text-red-600"
-                      }`}
+                      className={`text-xs font-medium ${product?.stock > 0 ? "text-green-600" : "text-red-600"
+                        }`}
                     >
                       {product?.stock > 0
                         ? `In Stock (${product?.stock})`

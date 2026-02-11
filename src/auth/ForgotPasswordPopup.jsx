@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { X } from "lucide-react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { sendForgotPasswordEmail } from "../api/user"; 
+import { sendForgotPasswordEmail } from "../api/user";
 
 
 const ForgotPasswordPopup = ({ isOpen, onClose }) => {
@@ -39,7 +39,7 @@ const ForgotPasswordPopup = ({ isOpen, onClose }) => {
 
         <h2 className="text-2xl font-bold mb-4 text-gray-800">Forgot Password</h2>
         <p className="text-gray-600 mb-6 text-sm">
-          Enter your registered email address. We'll send you instructions to reset your password.
+          Enter your registered email address and we’ll send you a New Password to Mail..
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">

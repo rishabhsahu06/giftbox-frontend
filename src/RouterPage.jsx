@@ -24,6 +24,7 @@ import AllCategoryPage from "./landingPage/Allcategorypage/AllCategoryPage";
 import LoginPage from "./auth/LoginPage";
 import HamperDetailPage from "./pages/HampersGift/HampersDetailsPage";
 import CustomizedPage from "./landingPage/CustomizeStepsForm/CustomizeMain";
+import TermsAndConditions from "./landingPage/TandCPage";
 
 const RouterPage = () => {
   const element = useRoutes([
@@ -45,6 +46,7 @@ const RouterPage = () => {
         { path: Routers.oAuthSuccess, element: <OAuthSuccess /> }, // fixed key
         { path: Routers.customize, element: <CustomizedPage /> },
         { path: Routers.hamperDetail, element: <HamperDetailPage /> },
+        { path: Routers.termsCondition, element: <TermsAndConditions /> },
       ],
     },
     { path: Routers.login, element: <LoginPage /> },

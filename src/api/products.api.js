@@ -3,9 +3,6 @@ import { Axios } from "../constants/maincontant";
 // ✅ FIXED: Now accepts filters parameter and sends in req.body
 export const getAllproducts = async (filters = {}) => {
   try {
-    // console.log('🔍 Sending filters to backend:', filters);
-    
-    // ✅ Send filters in request body
     const response = await Axios.post("/api/v1/products/get-products", filters);
     
     console.log('✅ Products received:', response.data);
