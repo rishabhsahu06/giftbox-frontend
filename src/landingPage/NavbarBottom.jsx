@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { X, User, ShoppingCart, ChevronDown } from "lucide-react";
 import { getParentCategoriesBySubcategory } from "../api/category.api";
 import { toast } from "sonner";
+import { Routers } from "../constants/router";
 
 const secondaryNavItems = [
     { label: "AboutUs", href: "/aboutus" },
@@ -83,7 +84,7 @@ const NavbarBottom = ({ mobileOpen, setMobileOpen, isActiveNavItem, setShowEnqui
     return (
         <nav className="bg-gray-50 border-b border-gray-200  top-[64px] sm:top-[80px] z-40">
             {/* ---------- DESKTOP NAV ---------- */}
-            <div className="max-w mx-auto px-2 hidden lg:flex items-center justify-between py-3 z-[999]">
+            <div className="max-w mx-auto px-2 hidden lg:flex items-center justify-between py-1.5 z-[999]">
                 {/* CATEGORY SECTION */}
                 <div className="flex items-center space-x-2">
                     {/* Static Links */}
@@ -150,8 +151,7 @@ const NavbarBottom = ({ mobileOpen, setMobileOpen, isActiveNavItem, setShowEnqui
                                 </div>
                             );
                         }
-
-                        // 🟡 Handle "Customized"
+                     // 🟡 Handle "Customized"
                         return (
                             <Link
                                 key={item.href}
@@ -174,7 +174,7 @@ const NavbarBottom = ({ mobileOpen, setMobileOpen, isActiveNavItem, setShowEnqui
                         <div key={cat._id} className="relative group">
                             <button
                                 onClick={() => handleCategoryClick(cat._id, cat.name)}
-                                className={`px-3 py-2 rounded text-[17px] font-medium transition-colors flex items-center gap-1 ${isActiveNavItem(`/allcategory/${cat._id}`)
+                                className={`px-3 py-2 rounded text-[15px] font-medium transition-colors flex items-center gap-1 ${isActiveNavItem(`/allcategory/${cat._id}`)
                                         ? "bg-black text-white"
                                         : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
                                     }`}
@@ -198,7 +198,7 @@ const NavbarBottom = ({ mobileOpen, setMobileOpen, isActiveNavItem, setShowEnqui
                                                 <img
                                                     src={sub.image}
                                                     alt={sub.name}
-                                                    className="w-8 h-8 object-cover rounded"
+                                                    className="w-5 h-5 object-cover rounded"
                                                     loading="lazy"
                                                 />
                                             )}
@@ -232,7 +232,7 @@ const NavbarBottom = ({ mobileOpen, setMobileOpen, isActiveNavItem, setShowEnqui
                                             <img
                                                 src={cat.image}
                                                 alt={cat.name}
-                                                className="w-8 h-8 object-cover rounded"
+                                                className="w-5 h-5 object-cover rounded"
                                                 loading="lazy"
                                             />
                                         )}
@@ -250,7 +250,7 @@ const NavbarBottom = ({ mobileOpen, setMobileOpen, isActiveNavItem, setShowEnqui
                         <Link
                             key={item.href}
                             to={item.href}
-                            className={`px-4 py-2 rounded text-[17px] font-medium transition-colors ${isActiveNavItem(item.href)
+                            className={`px-4 py-2 rounded text-[15px] font-medium transition-colors ${isActiveNavItem(item.href)
                                     ? "bg-black text-white"
                                     : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
                                 }`}
@@ -329,7 +329,7 @@ const NavbarBottom = ({ mobileOpen, setMobileOpen, isActiveNavItem, setShowEnqui
 
                                 {/* All Categories Link */}
                                 <Link
-                                    to="/allcategory"
+                                    to={Routers.AllCategoryPage}
                                     onClick={() => setMobileOpen(false)}
                                     className="w-full flex items-center p-3 rounded-lg mb-2 text-gray-800 hover:bg-gray-50 font-semibold bg-gray-100"
                                 >

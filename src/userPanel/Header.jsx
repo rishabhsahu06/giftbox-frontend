@@ -34,7 +34,7 @@ const Header = () => {
         </button>
         <button
           onClick={handleLogout}
-          className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-600 transition flex items-center justify-center md:justify-start"
+          className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-600 transition flex items-center justify-center md:justify-start cursor-pointer"
         >
           {/* Show icon only on small screens */}
           <LogOut className="w-5 h-5 md:hidden" />

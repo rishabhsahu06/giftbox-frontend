@@ -204,7 +204,7 @@ const CartPage = () => {
           </div>
 
           <Link to="/cart/address">
-            <button className="w-full mt-6 bg-black text-white py-3 rounded-lg">
+            <button className="w-full mt-6 bg-black text-white py-3 rounded-lg cursor-pointer">
               Place Order
             </button>
           </Link>

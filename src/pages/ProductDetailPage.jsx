@@ -113,18 +113,17 @@ export default function ProductDetailPage() {
       return;
     }
 
-    try {
-      // 🔴 OLD CODE (Caused the error): 
-      // await addToCart(product._id, quantity);
+    // instant navigation
+    navigate("/cart");
 
-      // 🟢 NEW FIXED CODE: Pass as a single object
-      await addToCart({
+    try {
+      const res = await addToCart({
         itemId: product._id,
-        quantity: quantity
+        quantity: quantity,
       });
 
-      toast.success("Item added to cart!");
-      navigate("/cart");
+      // API message show
+      toast.success(res?.message || "Item added to cart!");
     } catch (err) {
       console.error("Add to Cart Error:", err);
       toast.error("Failed to add product to cart");
@@ -301,7 +300,7 @@ export default function ProductDetailPage() {
               {/* PERSONALISE BUTTON */}
               <button
                 onClick={() => setShowCustomizeModal(true)}
-                className="w-full bg-gray-900 text-white py-3 rounded-xl font-semibold mt-3"
+                className="w-full bg-gray-900 text-white py-3 rounded-xl font-semibold mt-3 cursor-pointer"
               >
                 Personalise This Hamper
               </button>
@@ -309,7 +308,7 @@ export default function ProductDetailPage() {
                 {/* Checkout */}
                 <button
                   onClick={handleAddToCart}
-                  className="w-full bg-red-500 hover:bg-red-600 text-white py-4 rounded-xl font-semibold"
+                  className="w-full bg-red-500 hover:bg-red-600 text-white py-4 rounded-xl font-semibold cursor-pointer"
                 >
                   Proceed to Checkout
                 </button>
@@ -344,7 +343,7 @@ export default function ProductDetailPage() {
               />
 
               {/* Image */}
-              <label className="block mb-2 font-medium">Gift Image</label>
+              {/* <label className="block mb-2 font-medium">Gift Image</label> */}
               <ImageUploader
                 images={giftImageFiles}
                 onChange={setGiftImageFiles}
@@ -364,7 +363,7 @@ export default function ProductDetailPage() {
               {/* Submit */}
               <button
                 onClick={handleCustomizeSubmit}
-                className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-semibold"
+                className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl mt-2 font-semibold"
               >
                 Save Customization
               </button>

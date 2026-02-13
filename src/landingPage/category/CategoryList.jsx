@@ -5,6 +5,7 @@ import { useCart } from "../../context/CartContext";
 import { toast } from "sonner";
 import "react-toastify/dist/ReactToastify.css";
 import { getAllproducts } from "../../api/products.api";
+import { Routers } from "../../constants/router";
 
 const categories = [
   "Rakhi",
@@ -110,7 +111,9 @@ export default function BestSellingCategories({ onViewAll }) {
   };
 
   const handleBuyNow = (product) => navigate(`/product/${product._id}`);
-  const handleViewAll = () => onViewAll && onViewAll();
+  const handleViewAll = () => {
+    navigate(Routers.AllCategoryPage)
+  };
 
   const calculateDiscount = (original, sale) => {
     if (!original || !sale) return 0;
@@ -157,7 +160,7 @@ export default function BestSellingCategories({ onViewAll }) {
         {/* Products Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-2 sm:gap-6 mb-8 sm:mb-10">
           {products.length > 0 ? (
-            products.map((product) => (
+            products.slice(0,8).map((product) => (
               <div
                 key={product?._id}
                 className="bg-white rounded-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 flex flex-col"

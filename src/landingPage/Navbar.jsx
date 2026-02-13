@@ -25,7 +25,7 @@ const NavbarMain = () => {
   const handleSearch = () => {
     const query = searchQuery.trim();
     if (query) {
-      navigate(`/search?q=${encodeURIComponent(query)}`);
+      // navigate(`/search?q=${encodeURIComponent(query)}`);
       setMobileOpen(false);
     }
   };
@@ -117,7 +117,7 @@ const NavbarMain = () => {
               {/* Bulk Orders / Enquiry */}
               <button
                 onClick={() => setShowEnquiryModal(true)}
-                className="relative hidden md:flex items-center gap-2 px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold rounded-lg shadow-lg animate-bounce transition-all duration-300"
+                className="relative hidden md:flex items-center gap-2 px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold rounded-lg shadow-lg text-[15px] animate-pulse transition-all duration-300"
               >
                 <span>Bulk Orders / Enquiry</span>
               </button>

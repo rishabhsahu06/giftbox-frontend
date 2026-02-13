@@ -39,7 +39,7 @@ const Sidebar = () => {
       {/* Desktop Sidebar */}
       <aside
         className={`
-          bg-gray-50 text-gray-800 rounded-r-4xl border-[#f45b7a] border-2 flex-shrink-0 transition-all duration-300 relative mt-1
+          bg-gray-50 text-gray-800  border-[#f45b7a] border-1 flex-shrink-0 transition-all duration-300 relative 
           ${isOpen ? "w-64" : "w-20"}
           hidden md:block
         `}

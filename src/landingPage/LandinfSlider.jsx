@@ -26,7 +26,7 @@ const HeroCard = ({ card, index }) => {
 
   return (
     <div
-      className="rounded-2xl lg:rounded-3xl p-5 sm:p-6 lg:p-8 h-[190px] sm:h-[210px] lg:h-[230px] flex relative overflow-hidden shadow-md"
+      className="rounded-2xl mt-3  p-5 sm:p-6 lg:p-8 h-[190px] sm:h-[210px] lg:h-[210px] flex relative overflow-hidden "
       style={{ background: backgrounds[index % backgrounds.length] }}
     >
       <div className="flex flex-col justify-between h-full z-10 flex-1 pr-4 max-w-[55%]">
@@ -121,7 +121,7 @@ export default function Hero() {
         disabled={index === 0}
         className="absolute left-1 top-1/2 -translate-y-1/2 z-20 bg-white w-9 h-9 rounded-full shadow flex items-center justify-center disabled:opacity-40"
       >
-        <ChevronLeft size={18} />
+        <ChevronLeft className="text-[#067DFE]" size={50} />
       </button>
 
       <button
@@ -129,7 +129,7 @@ export default function Hero() {
         disabled={index >= maxIndex}
         className="absolute right-1 top-1/2 -translate-y-1/2 z-20 bg-white w-9 h-9 rounded-full shadow flex items-center justify-center disabled:opacity-40"
       >
-        <ChevronRight size={18} />
+        <ChevronRight size={50}  className="text-[#067DFE]" />
       </button>
 
       {/* Slider */}
